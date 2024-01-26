@@ -69,6 +69,7 @@ struct ubusd_acl_file {
 };
 
 const char *ubusd_acl_dir = "/usr/share/acl.d";
+bool ubusd_disable_acl = 0;
 static struct blob_buf bbuf;
 static struct avl_tree ubusd_acls;
 static int ubusd_acl_seq;
@@ -94,6 +95,9 @@ ubusd_acl_check(struct ubus_client *cl, const char *obj,
 	int match_len = 0;
 
 	if (!cl || !cl->uid || !obj)
+		return 0;
+
+	if (ubusd_disable_acl)
 		return 0;
 
 	/*

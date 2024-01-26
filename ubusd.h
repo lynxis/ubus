@@ -80,6 +80,7 @@ struct ubus_path {
 };
 
 extern const char *ubusd_acl_dir;
+extern bool ubusd_disable_acl;
 
 struct ubus_msg_buf *ubus_msg_new(void *data, int len, bool shared);
 void ubus_msg_send(struct ubus_client *cl, struct ubus_msg_buf *ub);

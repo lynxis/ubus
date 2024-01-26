@@ -238,6 +238,7 @@ static int usage(const char *progname)
 		"Options: \n"
 		"  -A <path>:		Set the path to ACL files\n"
 		"  -s <socket>:		Set the unix domain socket to listen on\n"
+		"  -D:			Disable ubus acl\n"
 		"\n", progname);
 	return 1;
 }
@@ -275,13 +276,16 @@ int main(int argc, char **argv)
 	openlog("ubusd", LOG_PID, LOG_DAEMON);
 	uloop_init();
 
-	while ((ch = getopt(argc, argv, "A:s:")) != -1) {
+	while ((ch = getopt(argc, argv, "A:Ds:")) != -1) {
 		switch (ch) {
 		case 's':
 			ubus_socket = optarg;
 			break;
 		case 'A':
 			ubusd_acl_dir = optarg;
+			break;
+		case 'D':
+			ubusd_disable_acl = 1;
 			break;
 		default:
 			return usage(argv[0]);

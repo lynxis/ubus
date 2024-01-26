@@ -11,6 +11,7 @@ check usage:
   Options: 
     -A <path>:\t\tSet the path to ACL files (esc)
     -s <socket>:\t\tSet the unix domain socket to listen on (esc)
+    -D:\t\t\tDisable ubus acl (esc)
   
   [1]
 
@@ -20,5 +21,6 @@ check usage:
   Options: 
     -A <path>:\t\tSet the path to ACL files (esc)
     -s <socket>:\t\tSet the unix domain socket to listen on (esc)
+    -D:\t\t\tDisable ubus acl (esc)
   
   [1]
