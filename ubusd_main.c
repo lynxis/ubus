@@ -293,7 +293,7 @@ int main(int argc, char **argv)
 	umask(0111);
 	server_fd.fd = usock(USOCK_UNIX | USOCK_SERVER | USOCK_NONBLOCK, ubus_socket, NULL);
 	if (server_fd.fd < 0) {
-		perror("usock");
+		fprintf(stderr, "usock: Can't create socket %s: %s\n", ubus_socket, strerror(errno));
 		ret = -1;
 		goto out;
 	}
