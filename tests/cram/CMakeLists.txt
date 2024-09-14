@@ -1,4 +1,4 @@
-FIND_PACKAGE(PythonInterp 3 REQUIRED)
+find_package(Python3 REQUIRED)
 FILE(GLOB test_cases "test_*.t")
 
 SET(PYTHON_VENV_DIR "${CMAKE_CURRENT_BINARY_DIR}/.venv")
