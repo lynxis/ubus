@@ -1,0 +1,52 @@
+name: Build ubus
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build ubus
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    outputs:
+      actualResult: ${{ steps.compileandtest.outcome }}
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt update && sudo apt install cmake make gcc pkg-config python3 libjson-c-dev lua5.1 liblua5.1-0-dev ninja-build valgrind
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: 'ubus'
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          repository: 'openwrt/libubox'
+          path: 'libubox'
+
+      - name: Install libubox
+        run: |
+          cd libubox
+          mkdir build
+          cd build
+          cmake -G Ninja ../
+          ninja
+          sudo ninja install
+
+      - name: Compile ubus
+        id: compileandtest
+        run: |
+          cd ubus
+          mkdir build
+          cd build
+          cmake -G Ninja -D BUILD_EXAMPLES=on -D UNIT_TESTING=on ../
+          ninja
+          ninja test
+
+      - name: collect failure logs
+        if: ${{ failure() }}
+        run:
+          find ubus/build -iname '*.log' | xargs cat
